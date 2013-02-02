@@ -1,5 +1,3 @@
-#include<iostream>
-
 #include<SFML/System.hpp>
 #include<SFML/Graphics.hpp>
 #include"spelare.hpp"

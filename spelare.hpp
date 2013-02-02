@@ -60,19 +60,19 @@ void Spelare::draw(RenderWindow &App)
 
 void Spelare::move(PlayerMovement UpDown, Time ElapsedTime)
 {
-    if(UpDown==up){
-        tank.move(0, -500*ElapsedTime.asSeconds());
-        cannon.move(0, -500*ElapsedTime.asSeconds());
+    if(UpDown == up){
+        tank.move(0, -500 * ElapsedTime.asSeconds());
+        cannon.move(0, -500 * ElapsedTime.asSeconds());
     } else{
-        tank.move(0,500*ElapsedTime.asSeconds());
-        cannon.move(0,500*ElapsedTime.asSeconds());
+        tank.move(0, 500 * ElapsedTime.asSeconds());
+        cannon.move(0, 500 * ElapsedTime.asSeconds());
     }
 }
 
 void Spelare::shoot()
 {
     RectangleShape tempObject;
-    tempObject.setSize(Vector2f(cannon.getSize().x/1.5, cannon.getSize().y/1.5));
+    tempObject.setSize(Vector2f(cannon.getSize().x / 1.5, cannon.getSize().y / 1.5));
     tempObject.setPosition(tank.getPosition().x + tank.getSize().x + cannon.getSize().x/2, tank.getPosition().y + tank.getSize().y/2);
     tempObject.setFillColor(Color::Black);
     Bullets.push_back(tempObject);
@@ -80,12 +80,12 @@ void Spelare::shoot()
 
 void Spelare::flyingBullets(Time ElapsedTime)
 {
-    for (int i=0; i<Bullets.size(); i++){
+    for (int i=0; i < Bullets.size(); i++){
         if(Bullets[i].getPosition().x > 300 || Bullets[i].getPosition().x < 0){
             Bullets.erase(Bullets.begin()+i);
         }
         else{
-            Bullets[i].move(300*ElapsedTime.asSeconds()*ShootingDirection,0);
+            Bullets[i].move(300 * ElapsedTime.asSeconds() * ShootingDirection, 0);
         }
     }
 }
