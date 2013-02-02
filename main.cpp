@@ -1,3 +1,5 @@
+#include<iostream>
+
 #include<SFML/System.hpp>
 #include<SFML/Graphics.hpp>
 #include"spelare.hpp"
@@ -51,7 +53,10 @@ int main()
             ElapsedTime = clock.getElapsedTime();
             spelare1.move(down, ElapsedTime);
         }
-        
+        if(Keyboard::isKeyPressed(Keyboard::Space)){
+            spelare1.shoot();
+        }
+        spelare1.flyingBullets(ElapsedTime);
         clock.restart();
         
         App.clear(Color::White);
