@@ -1,3 +1,4 @@
+
 #include<SFML/System.hpp>
 #include<SFML/Graphics.hpp>
 #include"spelare.hpp"
@@ -34,28 +35,24 @@ int main()
                 App.close();
             }
         }
-        
+        ElapsedTime=clock.getElapsedTime();
+        clock.restart();
         if(Keyboard::isKeyPressed(Keyboard::P)){
-            ElapsedTime = clock.getElapsedTime();
             spelare2.move(up, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::L)){
-            ElapsedTime = clock.getElapsedTime();
             spelare2.move(down, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::W)){
-            ElapsedTime = clock.getElapsedTime();
             spelare1.move(up, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::D)){
-            ElapsedTime = clock.getElapsedTime();
             spelare1.move(down, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::Space)){
             spelare1.shoot();
         }
         spelare1.flyingBullets(ElapsedTime);
-        clock.restart();
         
         App.clear(Color::White);
         spelare1.draw(App);
