@@ -37,19 +37,19 @@ int main()
         
         if(Keyboard::isKeyPressed(Keyboard::P)){
             ElapsedTime = clock.getElapsedTime();
-            spelare2.move(true, ElapsedTime);
+            spelare2.move(up, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::L)){
             ElapsedTime = clock.getElapsedTime();
-            spelare2.move(false, ElapsedTime);
+            spelare2.move(down, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::W)){
             ElapsedTime = clock.getElapsedTime();
-            spelare1.move(true, ElapsedTime);
+            spelare1.move(up, ElapsedTime);
         }
         if(Keyboard::isKeyPressed(Keyboard::D)){
             ElapsedTime = clock.getElapsedTime();
-            spelare1.move(false, ElapsedTime);
+            spelare1.move(down, ElapsedTime);
         }
         
         clock.restart();

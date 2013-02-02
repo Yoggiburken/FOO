@@ -8,6 +8,8 @@ using namespace std;
 using namespace sf;
 #endif
 
+enum PlayerMovement {up, down};
+
 
 class Spelare{
     int Health;
@@ -17,13 +19,12 @@ class Spelare{
 public:
     Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight);
     void draw(RenderWindow &App);
-    void move(bool up, Time ElapsedTime);
+    void move(PlayerMovement UpDown, Time ElapsedTime);
 };
 
 Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight)
 {
     Health=100;
-    Name.setString(SetName.c_str());
     
     shape.setSize(Vector2f(ScreenWidth/10, ScreenHeight/10));
     cannon.setSize(Vector2f(ScreenWidth/20, ScreenHeight/64));
@@ -47,9 +48,9 @@ void Spelare::draw(RenderWindow &App)
     App.draw(cannon);
 }
 
-void Spelare::move(bool up, Time ElapsedTime)
+void Spelare::move(PlayerMovement UpDown, Time ElapsedTime)
 {
-    if(up==true){
+    if(UpDown==up){
         shape.move(0, -500*ElapsedTime.asSeconds());
         cannon.move(0, -500*ElapsedTime.asSeconds());
     } else{
