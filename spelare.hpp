@@ -22,9 +22,9 @@ class Spelare{
 public:
     Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight);
     void draw(RenderWindow &App);
-    void move(PlayerMovement UpDown, Time ElapsedTime);
+    void move(PlayerMovement UpDown, Time &ElapsedTime);
     void shoot();
-    void flyingBullets(Time ElapsedTime);
+    void flyingBullets(Time &ElapsedTime);
 };
 
 Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight)
@@ -58,7 +58,7 @@ void Spelare::draw(RenderWindow &App)
     }
 }
 
-void Spelare::move(PlayerMovement UpDown, Time ElapsedTime)
+void Spelare::move(PlayerMovement UpDown, Time &ElapsedTime)
 {
     if(UpDown == up){
         tank.move(0, -500 * ElapsedTime.asSeconds());
@@ -78,7 +78,7 @@ void Spelare::shoot()
     Bullets.push_back(tempObject);
 }
 
-void Spelare::flyingBullets(Time ElapsedTime)
+void Spelare::flyingBullets(Time &ElapsedTime)
 {
     for (int i=0; i < Bullets.size(); i++){
         if(Bullets[i].getPosition().x > 300 || Bullets[i].getPosition().x < 0){
