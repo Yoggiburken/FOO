@@ -99,7 +99,7 @@ void Spelare::bulletCollision(Spelare &spelare)
                         }
                     } else if(BulletPositionY + BulletSizeY   >   CannonPositionY){
                         if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
-                            spelare.Health -=dmg;
+                            spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
                             continue;
                         }
@@ -112,13 +112,13 @@ void Spelare::bulletCollision(Spelare &spelare)
                 if(BulletPositionX   <   TankPositionX + TankSizeX){
                     if(BulletPositionY  >   TankPositionY){
                         if(BulletPositionY  <   TankPositionY + TankSizeY){
-                            spelare.Health -= dmg;
+                            spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
                             continue;
                         }
                     } else if(BulletPositionY + BulletSizeY   >   TankPositionY){
-                        if(BulletPositionY + BulletSizeY    < TankPositionY + TankSizeY){
-                            spelare.Health -=dmg;
+                        if(BulletPositionY + BulletSizeY    <   TankPositionY + TankSizeY){
+                            spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
                             continue;
                         }
@@ -128,7 +128,7 @@ void Spelare::bulletCollision(Spelare &spelare)
                 if(BulletPositionX + BulletSizeX    <   TankPositionX + TankSizeX){
                     if(BulletPositionY  >   TankPositionY){
                         if(BulletPositionY  <   TankPositionY + TankSizeY){
-                            spelare.Health -= dmg;
+                            spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
                             continue;
                         }
@@ -157,13 +157,13 @@ void Spelare::draw(RenderWindow &App)
 
 void Spelare::move(PlayerMovement UpDown, Time &ElapsedTime)
 {
-    if(UpDown == up){
-        tank.move(0, -500 * ElapsedTime.asSeconds());
-        cannon.move(0, -500 * ElapsedTime.asSeconds());
-    } else{
-        tank.move(0, 500 * ElapsedTime.asSeconds());
-        cannon.move(0, 500 * ElapsedTime.asSeconds());
-    }
+       if(UpDown == up){
+           tank.move(0, -500 * ElapsedTime.asSeconds());
+           cannon.move(0, -500 * ElapsedTime.asSeconds());
+       } else{
+           tank.move(0, 500 * ElapsedTime.asSeconds());
+           cannon.move(0, 500 * ElapsedTime.asSeconds());
+       }
 }
 
 void Spelare::shoot()

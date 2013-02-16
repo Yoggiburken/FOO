@@ -16,6 +16,8 @@ int main()
 {
     int WIDTH=300;
     int HEIGHT=300;
+    double player1shoottimer;
+    bool Player1ShoottimerReady = true;
     RenderWindow App(VideoMode(WIDTH, HEIGHT, 32),"Test");
     
     Spelare spelare1(1, "Albin", WIDTH, HEIGHT);
@@ -38,24 +40,26 @@ int main()
         clock.restart();
         if(Keyboard::isKeyPressed(Keyboard::P)){
             spelare2.move(up, ElapsedTime);
-        }
-        if(Keyboard::isKeyPressed(Keyboard::L)){
+        } if(Keyboard::isKeyPressed(Keyboard::L)){
             spelare2.move(down, ElapsedTime);
-        }
-        if(Keyboard::isKeyPressed(Keyboard::W)){
+        } if(Keyboard::isKeyPressed(Keyboard::W)){
             spelare1.move(up, ElapsedTime);
-        }
-        if(Keyboard::isKeyPressed(Keyboard::D)){
+        } if(Keyboard::isKeyPressed(Keyboard::D)){
             spelare1.move(down, ElapsedTime);
-        }
-        if(Keyboard::isKeyPressed(Keyboard::Space)){
+        } if(Keyboard::isKeyPressed(Keyboard::Space) && Player1ShoottimerReady){
             spelare1.shoot();
+            Player1ShoottimerReady = false;
+        } if(!Player1ShoottimerReady){
+            player1shoottimer += ElapsedTime.asSeconds();
+            if(player1shoottimer >= 0.1){
+                Player1ShoottimerReady = true;
+                player1shoottimer =0;
+            }
         }
         spelare1.bulletCollision(spelare2);
         spelare2.bulletCollision(spelare1);
         spelare1.flyingBullets(ElapsedTime);
 
-        
         App.clear(Color::White);
         spelare1.draw(App);
         spelare2.draw(App);
