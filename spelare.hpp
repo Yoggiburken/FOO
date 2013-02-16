@@ -26,6 +26,7 @@ public:
     void flyingBullets(Time &ElapsedTime);
     RectangleShape tank;
     RectangleShape cannon;
+    RectangleShape healthbar;
     int Health;
 };
 
@@ -43,12 +44,22 @@ Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeigh
         tank.setPosition(ScreenWidth/40, ScreenHeight/2);
         cannon.setPosition(ScreenWidth/8, ScreenHeight/2 + ScreenHeight/20-ScreenHeight/128);
         ShootingDirection = 1;
+        healthbar.setFillColor(Color::Red);
+        healthbar.setOutlineColor(Color::Black);
+        healthbar.setOutlineThickness(2);
+        healthbar.setPosition(10, 5);
+        healthbar.setSize(Vector2f(Health, 20));
     } else{
         tank.setFillColor(Color::Blue);
         cannon.setFillColor(Color::Blue);
         tank.setPosition(ScreenWidth-ScreenWidth/8, ScreenHeight/2);
         cannon.setPosition(ScreenWidth-ScreenWidth/8-ScreenWidth/20, ScreenHeight/2 + ScreenHeight/20-ScreenHeight/128);
         ShootingDirection = -1;
+        healthbar.setFillColor(Color::Red);
+        healthbar.setOutlineColor(Color::Black);
+        healthbar.setOutlineThickness(2);
+        healthbar.setPosition(300-Health-10, 5);
+        healthbar.setSize(Vector2f(Health, 20));
     }
 }
 
@@ -79,12 +90,14 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   CannonPositionY + CannonSizeY){
                             spelare.Health -= dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     } else if(BulletPositionY + BulletSizeY   >   CannonPositionY){
                         if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
                             spelare.Health -=dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     }
@@ -95,12 +108,14 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   CannonPositionY + CannonSizeY){
                             spelare.Health -= dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     } else if(BulletPositionY + BulletSizeY   >   CannonPositionY){
                         if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     }
@@ -114,12 +129,14 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   TankPositionY + TankSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     } else if(BulletPositionY + BulletSizeY   >   TankPositionY){
                         if(BulletPositionY + BulletSizeY    <   TankPositionY + TankSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     }
@@ -130,12 +147,14 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   TankPositionY + TankSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     } else if(BulletPositionY + BulletSizeY   >   TankPositionY){
                         if(BulletPositionY + BulletSizeY    < TankPositionY + TankSizeY){
                             spelare.Health -=dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
                     }
@@ -150,6 +169,7 @@ void Spelare::draw(RenderWindow &App)
 {
     App.draw(tank);
     App.draw(cannon);
+    App.draw(healthbar);
     for (int i=0; i<Bullets.size(); i++) {
         App.draw(Bullets[i]);
     }
