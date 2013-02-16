@@ -13,23 +13,26 @@ enum PlayerMovement {up, down};
 
 
 class Spelare{
-    int Health;
-    RectangleShape tank;
-    RectangleShape cannon;
     char ShootingDirection;
     vector<RectangleShape>Bullets;
+    int dmg;
     
 public:
     Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight);
     void draw(RenderWindow &App);
+    void bulletCollision(Spelare &spelare);
     void move(PlayerMovement UpDown, Time &ElapsedTime);
     void shoot();
     void flyingBullets(Time &ElapsedTime);
+    RectangleShape tank;
+    RectangleShape cannon;
+    int Health;
 };
 
 Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight)
 {
     Health=100;
+    dmg=10;
     
     tank.setSize(Vector2f(ScreenWidth/10, ScreenHeight/10));
     cannon.setSize(Vector2f(ScreenWidth/20, ScreenHeight/64));
@@ -48,6 +51,100 @@ Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeigh
         ShootingDirection = -1;
     }
 }
+
+void Spelare::bulletCollision(Spelare &spelare)
+{
+    if(Bullets.size()   !=  0){
+        double BulletSizeX      =   Bullets[0].getSize().x;
+        double BulletSizeY      =   Bullets[0].getSize().y;
+        
+        double CannonPositionX  =   spelare.cannon.getPosition().x;
+        double CannonSizeX      =   spelare.cannon.getSize().x;
+        double CannonPositionY  =   spelare.cannon.getPosition().y;
+        double CannonSizeY      =   spelare.cannon.getSize().y;
+        
+        double TankPositionX    =   spelare.tank.getPosition().x;
+        double TankSizeX        =   spelare.tank.getSize().x;
+        double TankPositionY    =   spelare.tank.getPosition().y;
+        double TankSizeY        =   spelare.tank.getSize().y;
+    
+        for(int i=0; i<Bullets.size(); i++){
+            double BulletPositionX  =   Bullets[i].getPosition().x;
+            double BulletPositionY  =   Bullets[i].getPosition().y;
+            
+            //collision with cannon
+            if(BulletPositionX   >   CannonPositionX){
+                if(BulletPositionX   <   CannonPositionX + CannonSizeX){
+                    if(BulletPositionY  >   CannonPositionY){
+                        if(BulletPositionY  <   CannonPositionY + CannonSizeY){
+                            spelare.Health -= dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    } else if(BulletPositionY + BulletSizeY   >   CannonPositionY){
+                        if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
+                            spelare.Health -=dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    }
+                }
+            } else if(BulletPositionX + BulletSizeX   >   CannonPositionX){
+                if(BulletPositionX + BulletSizeX    <   CannonPositionX + CannonSizeX){
+                    if(BulletPositionY  >   CannonPositionY){
+                        if(BulletPositionY  <   CannonPositionY + CannonSizeY){
+                            spelare.Health -= dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    } else if(BulletPositionY + BulletSizeY   >   CannonPositionY){
+                        if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
+                            spelare.Health -=dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    }
+                }
+            }
+            
+            //collision with tank
+            if(BulletPositionX   >   TankPositionX){
+                if(BulletPositionX   <   TankPositionX + TankSizeX){
+                    if(BulletPositionY  >   TankPositionY){
+                        if(BulletPositionY  <   TankPositionY + TankSizeY){
+                            spelare.Health -= dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    } else if(BulletPositionY + BulletSizeY   >   TankPositionY){
+                        if(BulletPositionY + BulletSizeY    < TankPositionY + TankSizeY){
+                            spelare.Health -=dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    }
+                }
+            } else if(BulletPositionX + BulletSizeX   >   TankPositionX){
+                if(BulletPositionX + BulletSizeX    <   TankPositionX + TankSizeX){
+                    if(BulletPositionY  >   TankPositionY){
+                        if(BulletPositionY  <   TankPositionY + TankSizeY){
+                            spelare.Health -= dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    } else if(BulletPositionY + BulletSizeY   >   TankPositionY){
+                        if(BulletPositionY + BulletSizeY    < TankPositionY + TankSizeY){
+                            spelare.Health -=dmg;
+                            Bullets.erase(Bullets.begin()+i);
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 void Spelare::draw(RenderWindow &App)
 {
@@ -89,3 +186,5 @@ void Spelare::flyingBullets(Time &ElapsedTime)
         }
     }
 }
+           
+

@@ -1,4 +1,3 @@
-
 #include<SFML/System.hpp>
 #include<SFML/Graphics.hpp>
 #include"spelare.hpp"
@@ -52,7 +51,10 @@ int main()
         if(Keyboard::isKeyPressed(Keyboard::Space)){
             spelare1.shoot();
         }
+        spelare1.bulletCollision(spelare2);
+        spelare2.bulletCollision(spelare1);
         spelare1.flyingBullets(ElapsedTime);
+
         
         App.clear(Color::White);
         spelare1.draw(App);
