@@ -16,6 +16,8 @@ class Spelare{
     char ShootingDirection;
     vector<RectangleShape>Bullets;
     int dmg;
+    int repairvalue;
+    double RepairTimer;
     
 public:
     Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight);
@@ -24,16 +26,19 @@ public:
     void move(PlayerMovement UpDown, Time &ElapsedTime);
     void shoot();
     void flyingBullets(Time &ElapsedTime);
+    void repair(Time &ElapsedTime);
     RectangleShape tank;
     RectangleShape cannon;
     RectangleShape healthbar;
-    int Health;
+    RectangleShape healthbarOutline;
+    double Health;
 };
 
 Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeight)
 {
     Health=100;
     dmg=10;
+    repairvalue=5;
     
     tank.setSize(Vector2f(ScreenWidth/10, ScreenHeight/10));
     cannon.setSize(Vector2f(ScreenWidth/20, ScreenHeight/64));
@@ -45,10 +50,12 @@ Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeigh
         cannon.setPosition(ScreenWidth/8, ScreenHeight/2 + ScreenHeight/20-ScreenHeight/128);
         ShootingDirection = 1;
         healthbar.setFillColor(Color::Red);
-        healthbar.setOutlineColor(Color::Black);
-        healthbar.setOutlineThickness(2);
         healthbar.setPosition(10, 5);
         healthbar.setSize(Vector2f(Health, 20));
+        healthbarOutline.setOutlineColor(Color::Black);
+        healthbarOutline.setOutlineThickness(2);
+        healthbarOutline.setPosition( 10, 5);
+        healthbarOutline.setSize(Vector2f(100, 20));
     } else{
         tank.setFillColor(Color::Blue);
         cannon.setFillColor(Color::Blue);
@@ -56,10 +63,12 @@ Spelare::Spelare(int PlayerNum, string SetName, int ScreenWidth, int ScreenHeigh
         cannon.setPosition(ScreenWidth-ScreenWidth/8-ScreenWidth/20, ScreenHeight/2 + ScreenHeight/20-ScreenHeight/128);
         ShootingDirection = -1;
         healthbar.setFillColor(Color::Red);
-        healthbar.setOutlineColor(Color::Black);
-        healthbar.setOutlineThickness(2);
         healthbar.setPosition(300-Health-10, 5);
         healthbar.setSize(Vector2f(Health, 20));
+        healthbarOutline.setOutlineColor(Color::Black);
+        healthbarOutline.setOutlineThickness(2);
+        healthbarOutline.setPosition( 300-110, 5);
+        healthbarOutline.setSize(Vector2f(100, 20));
     }
 }
 
@@ -90,6 +99,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   CannonPositionY + CannonSizeY){
                             spelare.Health -= dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -97,6 +109,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
                             spelare.Health -=dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -108,6 +123,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   CannonPositionY + CannonSizeY){
                             spelare.Health -= dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -115,6 +133,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY + BulletSizeY    < CannonPositionY + CannonSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -129,6 +150,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   TankPositionY + TankSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -136,6 +160,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY + BulletSizeY    <   TankPositionY + TankSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -147,6 +174,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY  <   TankPositionY + TankSizeY){
                             spelare.Health  -=  dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -154,6 +184,9 @@ void Spelare::bulletCollision(Spelare &spelare)
                         if(BulletPositionY + BulletSizeY    < TankPositionY + TankSizeY){
                             spelare.Health -=dmg;
                             Bullets.erase(Bullets.begin()+i);
+                            if(spelare.Health   <   0){
+                                spelare.Health  =   0;
+                            }
                             spelare.healthbar.setSize(Vector2f(spelare.Health, 20));
                             continue;
                         }
@@ -169,6 +202,7 @@ void Spelare::draw(RenderWindow &App)
 {
     App.draw(tank);
     App.draw(cannon);
+    App.draw(healthbarOutline);
     App.draw(healthbar);
     for (int i=0; i<Bullets.size(); i++) {
         App.draw(Bullets[i]);
@@ -206,5 +240,13 @@ void Spelare::flyingBullets(Time &ElapsedTime)
         }
     }
 }
-           
 
+void Spelare::repair(Time &ElapsedTime)
+{
+    if(Health   <   100 && Health   >   0)  
+    {
+        Health+=repairvalue * ElapsedTime.asSeconds();
+        RepairTimer=0;
+        healthbar.setSize(Vector2f(Health, 20));
+    }
+}

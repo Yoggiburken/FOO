@@ -40,25 +40,36 @@ int main()
         clock.restart();
         if(Keyboard::isKeyPressed(Keyboard::P)){
             spelare2.move(up, ElapsedTime);
-        } if(Keyboard::isKeyPressed(Keyboard::L)){
+        } 
+        if(Keyboard::isKeyPressed(Keyboard::L)){
             spelare2.move(down, ElapsedTime);
-        } if(Keyboard::isKeyPressed(Keyboard::W)){
+        } 
+        if(Keyboard::isKeyPressed(Keyboard::W)){
             spelare1.move(up, ElapsedTime);
-        } if(Keyboard::isKeyPressed(Keyboard::D)){
+        } 
+        if(Keyboard::isKeyPressed(Keyboard::D)){
             spelare1.move(down, ElapsedTime);
-        } if(Keyboard::isKeyPressed(Keyboard::Space) && Player1ShoottimerReady){
+        } 
+        if(Keyboard::isKeyPressed(Keyboard::K)){
+            spelare2.shoot();
+        }
+        if(Keyboard::isKeyPressed(Keyboard::Space) && Player1ShoottimerReady){
             spelare1.shoot();
             Player1ShoottimerReady = false;
-        } if(!Player1ShoottimerReady){
+        } 
+        if(!Player1ShoottimerReady){
             player1shoottimer += ElapsedTime.asSeconds();
             if(player1shoottimer >= 0.1){
                 Player1ShoottimerReady = true;
                 player1shoottimer =0;
             }
         }
+        spelare1.repair(ElapsedTime);
+        spelare2.repair(ElapsedTime);
         spelare1.bulletCollision(spelare2);
         spelare2.bulletCollision(spelare1);
         spelare1.flyingBullets(ElapsedTime);
+        spelare2.flyingBullets(ElapsedTime);
 
         App.clear(Color::White);
         spelare1.draw(App);
